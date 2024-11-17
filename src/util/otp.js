@@ -1,11 +1,13 @@
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 
-const generateOTP = () => {
-  return crypto.randomBytes(3).toString("hex");
-};
+function generateOTP() {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
 
 const sendOTP = (email, OTP) => {
+  console.log(email)
+  
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -13,7 +15,7 @@ const sendOTP = (email, OTP) => {
       pass: process.env.EMAIL_SERVICE_PASS,
     },
   });
-
+  
   const mailOptions = {
     from: process.env.EMAIL_SERVICE_USER,
     to: email,
